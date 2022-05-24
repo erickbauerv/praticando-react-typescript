@@ -10,6 +10,5 @@ export const App = () => {
         <AppRoutes/>
       </BrowserRouter>
     </ThemeProvider>
-
   );
 }
