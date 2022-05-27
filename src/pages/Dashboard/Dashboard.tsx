@@ -1,8 +1,13 @@
 import { useCallback, useState } from "react";
 
+interface IListItem{
+    title: string;
+    isSelected: boolean;
+}
+
 export const Dashboard = () => {
-    // useState de uma lista
-    const [list, setList] = useState<string[]>(["teste1", "teste2", "teste3"]);
+    // useState de uma lista de objetos
+    const [list, setList] = useState<IListItem[]>([]);
 
     // const que recebe um evento do mesmo tipo do onKeyDown
     const handleInputKeyDown: React.KeyboardEventHandler<HTMLInputElement> = useCallback((e) => {
@@ -19,10 +24,10 @@ export const Dashboard = () => {
             
             // setList da list atual
             setList((oldList) => {
-                // Se a lista antiga já possuir o a const value retorna ela mesma
-                if(oldList.includes(value)) return oldList;
+                // Se algum item da lista antiga já possuir a const value retorna ela mesma
+                if(oldList.some((listItem) => listItem.title === value)) return oldList;
                 // Retorna uma nova lista com os valores da lista anterior, e o valor atual no evento
-                return [...oldList, value];
+                return [...oldList, {title: value, isSelected: false}];
             })
         }
     }, []);
@@ -32,10 +37,33 @@ export const Dashboard = () => {
             <p>Lista</p>
             {/* Quando qualquer tecla for pressionada no input chama o useCallback do handleInputKeyDown*/}
             <input onKeyDown={handleInputKeyDown} />
+
+            <p>{list.filter((listItem) => listItem.isSelected).length}</p>
+
             <ul>
                 {/* list.map funciona como foreach para a list no useState */}
-                {list.map((value: string) => {
-                    return <li key={value}>{value}</li>
+                {list.map((listItem: IListItem) => {
+                    return <li key={listItem.title}>
+                        <input 
+                            type="checkbox"
+                            checked={listItem.isSelected}
+                            onChange={() => {
+                                setList(oldList => {
+                                    return oldList.map(oldListItem => {
+                                        const newIsSelected = oldListItem.title === listItem.title
+                                            ? !oldListItem.isSelected
+                                            : oldListItem.isSelected
+                                        
+                                        return{
+                                            ...oldListItem,
+                                            isSelected: newIsSelected,
+                                        }
+                                    })
+                                })
+                            }} 
+                        />
+                        {listItem.title}
+                    </li>
                 })}
             </ul>
         </div>
