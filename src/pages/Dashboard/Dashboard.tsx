@@ -1,13 +1,14 @@
 import { useCallback, useState } from "react";
 
-interface IListItem{
+interface ITarefa{
+    id: number
     title: string;
-    isSelected: boolean;
+    isCompleted: boolean;
 }
 
 export const Dashboard = () => {
     // useState de uma lista de objetos
-    const [list, setList] = useState<IListItem[]>([]);
+    const [list, setList] = useState<ITarefa[]>([]);
 
     // const que recebe um evento do mesmo tipo do onKeyDown
     const handleInputKeyDown: React.KeyboardEventHandler<HTMLInputElement> = useCallback((e) => {
@@ -27,7 +28,7 @@ export const Dashboard = () => {
                 // Se algum item da lista antiga já possuir a const value retorna ela mesma
                 if(oldList.some((listItem) => listItem.title === value)) return oldList;
                 // Retorna uma nova lista com os valores da lista anterior, e o valor atual no evento
-                return [...oldList, {title: value, isSelected: false}];
+                return [...oldList, {title: value, isCompleted: false, id: oldList.length}];
             })
         }
     }, []);
@@ -38,25 +39,25 @@ export const Dashboard = () => {
             {/* Quando qualquer tecla for pressionada no input chama o useCallback do handleInputKeyDown*/}
             <input onKeyDown={handleInputKeyDown} />
 
-            <p>{list.filter((listItem) => listItem.isSelected).length}</p>
+            <p>{list.filter((listItem) => listItem.isCompleted).length}</p>
 
             <ul>
                 {/* list.map funciona como foreach para a list no useState */}
-                {list.map((listItem: IListItem) => {
-                    return <li key={listItem.title}>
+                {list.map((listItem: ITarefa) => {
+                    return <li key={listItem.id}>
                         <input 
                             type="checkbox"
-                            checked={listItem.isSelected}
+                            checked={listItem.isCompleted}
                             onChange={() => {
                                 setList(oldList => {
                                     return oldList.map(oldListItem => {
                                         const newIsSelected = oldListItem.title === listItem.title
-                                            ? !oldListItem.isSelected
-                                            : oldListItem.isSelected
+                                            ? !oldListItem.isCompleted
+                                            : oldListItem.isCompleted
                                         
                                         return{
                                             ...oldListItem,
-                                            isSelected: newIsSelected,
+                                            isCompleted: newIsSelected,
                                         }
                                     })
                                 })
