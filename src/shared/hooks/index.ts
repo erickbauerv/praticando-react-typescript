@@ -1,1 +1,1 @@
-export * from "./UseUsuarioLogado";
+export {}

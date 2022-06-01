@@ -1,15 +1,15 @@
 import { Api } from "../ApiConfig";
 import { ApiException } from "../ApiException";
 
-interface ITarefa{
+export interface ITarefa{
     id: number
-    title: string;
+    nome: string;
     isCompleted: boolean;
 }
 
 const getAll = async (): Promise<ITarefa[] | ApiException> => {
     try {
-        const {data} = await Api().get("http://localhost:3333/tarefas");
+        const {data} = await Api().get("http://leonardofronza-001-site1.dtempurl.com/api/atores");
         return data;
     } catch (error: any){
         return new ApiException(error.message || "Erro ao buscar os registros.")
@@ -25,7 +25,7 @@ const deleteById = async (id: number): Promise<ITarefa[] | ApiException> => {
     }
 };
 
-const getById = async (dataToCreate: Omit<ITarefa, "id">): Promise<ITarefa[] | ApiException> => {
+const create = async (dataToCreate: Omit<ITarefa, "id">): Promise<ITarefa[] | ApiException> => {
     try {
         const {data} = await Api().post<any>("http://localhost:3333/tarefas" , dataToCreate);
         return data;
@@ -34,16 +34,16 @@ const getById = async (dataToCreate: Omit<ITarefa, "id">): Promise<ITarefa[] | A
     }
 };
 
-const create = async (id: string, dataToUpdate: ITarefa): Promise<ITarefa[] | ApiException> => {
+const updateById = async (id: string, dataToUpdate: ITarefa): Promise<ITarefa[] | ApiException> => {
     try {
-        const {data} = await Api().put(`http://localhost:3333/tarefas/${id}`, dataToUpdate);
+        const {data} = await Api().put(`http://leonardofronza-001-site1.dtempurl.com/api/atores${id}`, dataToUpdate);
         return data;
     } catch (error: any){
         return new ApiException(error.message || "Erro ao atualizar o registro.")
     }
 };
 
-const updateById = async (id: string): Promise<undefined | ApiException> => {
+const getById = async (id: string): Promise<undefined | ApiException> => {
     try {
         await Api().get(`http://localhost:3333/tarefas/${id}`);
         return undefined;
