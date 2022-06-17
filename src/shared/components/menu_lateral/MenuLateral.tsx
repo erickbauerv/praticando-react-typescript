@@ -2,7 +2,7 @@ import { Avatar, Divider, Drawer, Icon, List, ListItemButton, ListItemIcon, List
 import { Box } from "@mui/system"
 import { useCallback } from "react";
 import { useMatch, useNavigate, useResolvedPath } from "react-router-dom";
-import { useDrawerContext } from "../../contexts"
+import { useDrawerContext, useAppThemeContext } from "../../contexts"
 
 interface IProps{
     children: React.ReactNode
@@ -41,6 +41,7 @@ export const MenuLateral: React.FC<IProps> = ({children}) => {
     const smDown = useMediaQuery(theme.breakpoints.down("sm"))
 
     const { isDrawerOpen, toggleDrawerOpen, drawerOptions } = useDrawerContext();
+    const { toggleTheme } = useAppThemeContext();
 
     return(
         <>
@@ -54,7 +55,7 @@ export const MenuLateral: React.FC<IProps> = ({children}) => {
                     </Box>
                     <Divider/>
                     <Box flex={1}>
-                        <List>
+                        <List component="nav">
                             {drawerOptions.map(drawerOption => (
                                 <ListItemLink
                                     to={drawerOption.path}
@@ -64,6 +65,15 @@ export const MenuLateral: React.FC<IProps> = ({children}) => {
                                     onClick={smDown ? toggleDrawerOpen : undefined}
                                 />
                             ))}
+                        </List>
+                    </Box>
+
+                    <Box>
+                        <List component="nav">
+                            <ListItemButton onClick={toggleTheme}>
+                                <ListItemIcon><Icon>dark_mode</Icon></ListItemIcon>
+                                <ListItemText primary="Alternar tena"/>
+                            </ListItemButton>
                         </List>
                     </Box>
                 </Box>
