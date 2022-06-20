@@ -1,9 +1,13 @@
+import { BarraDeFerramentas } from "../../shared/components"
 import { LayoutBaseDePagina } from "../../shared/layouts"
 
 export const Dashboard = () => {
     return(
-        <LayoutBaseDePagina titulo="Página inicial" barraDeFerramentas={<>Barra de ferramentas</>}>
-            Teste
+        // Recebe o component BarraDeFerramentas como atributo
+        <LayoutBaseDePagina 
+            titulo="Página inicial" 
+            barraDeFerramentas={(<BarraDeFerramentas mostrarInputDeBusca children={undefined}/>)}> 
+            
         </LayoutBaseDePagina>
     )
 }
