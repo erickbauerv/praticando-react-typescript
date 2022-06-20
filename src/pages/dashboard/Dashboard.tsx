@@ -1,4 +1,4 @@
-import { FerramentasDeDetalhe, FerramentasDeListagem } from "../../shared/components"
+import { FerramentasDeDetalhe } from "../../shared/components"
 import { LayoutBaseDePagina } from "../../shared/layouts"
 
 export const Dashboard = () => {
@@ -8,8 +8,8 @@ export const Dashboard = () => {
             titulo="Página inicial" 
             barraDeFerramentas={(
                 <FerramentasDeDetalhe 
-                    mostrarBotaoApagar
-                    mostrarBotaoApagarCarregando
+                    mostrarBotaoSalvarFechar
+                    mostrarBotaoSalvarFecharCarregando
                 />
             )}> 
             
