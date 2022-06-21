@@ -1,7 +1,13 @@
 import axios from "axios"
+import { errorInterceptor, responseInterceptor } from "./interceptors"
 
-export const Api = () => {
-    return axios.create({
-        baseURL: "http://leonardofronza-001-site1.dtempurl.com"
-    })
-}
+const Api = axios.create({
+    baseURL: "localhost:3333"
+})
+
+Api.interceptors.response.use(
+    (response) => responseInterceptor(response),
+    (error) => errorInterceptor(error)
+)
+
+export {Api}
